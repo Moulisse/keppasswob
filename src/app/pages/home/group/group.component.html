@@ -1,4 +1,4 @@
-<div (click)="changeCurrentGroup.emit(group)" [style.font-size]="18 - 2 * rank + 'px'" class="title" [@fadeIn]>
+<div (click)="changeCurrentGroup.emit(group)" [class.selected]="group === currentGroup" [style.font-size]="18 - 2 * rank + 'px'" class="title">
   {{group.name}}
 </div>
 <div *ngIf="group?.groups?.length > 0" class="children">

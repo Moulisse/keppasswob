@@ -2,6 +2,15 @@
   padding-top: 8px;
   padding-bottom: 8px;
   cursor: pointer;
+  transition: color 0.2s ease-out;
+
+  &.selected {
+    color: var(--ion-color-primary);
+  }
+
+  &:hover {
+    color: var(--ion-color-primary-tint);
+  }
 }
 
 .children {

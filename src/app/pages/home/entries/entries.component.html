@@ -1,9 +1,14 @@
-<ion-item *ngFor="let entry of currentGroup.entries">
-  <ion-label>
-    {{entry.fields.Title}}
-  </ion-label>
-</ion-item>
+<div [@fadeIn]="currentGroup">
 
-<ion-item lines="none">
-  <app-add-button></app-add-button>
-</ion-item>
+  <ion-item *ngFor="let entry of currentGroup.entries">
+    <ion-label>
+      {{entry.fields.Title}}
+    </ion-label>
+  </ion-item>
+
+  <ion-item lines="none">
+    <app-add-button></app-add-button>
+  </ion-item>
+
+</div>
+
