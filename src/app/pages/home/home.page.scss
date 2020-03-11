@@ -1,0 +1,25 @@
+.container {
+  background-color: var(--ion-item-background);
+  padding: 16px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "header header" "menu content";
+
+  .header {
+    grid-area: header;
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .menu {
+    grid-area: menu;
+
+  }
+
+  .content {
+    grid-area: content;
+
+  }
+}

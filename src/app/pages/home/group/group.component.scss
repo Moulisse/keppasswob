@@ -1,0 +1,13 @@
+.title {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+}
+
+.children {
+  margin-left: 6px;
+  padding-left: 10px;
+  border-left: solid 1px var(--ion-color-primary);
+  margin-top: 3px;
+  margin-bottom: 3px;
+}

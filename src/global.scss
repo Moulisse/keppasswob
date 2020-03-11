@@ -24,3 +24,21 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  min-width: 100%;
+
+  .container {
+    overflow-y: visible;
+    min-width: 100%;
+
+    @media screen and (min-width: 640px) {
+      min-width: 640px;
+    }
+  }
+}

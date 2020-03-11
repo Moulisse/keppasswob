@@ -1,0 +1,6 @@
+<div (click)="changeCurrentGroup.emit(group)" [style.font-size]="18 - 2 * rank + 'px'" class="title" [@fadeIn]>
+  {{group.name}}
+</div>
+<div *ngIf="group?.groups?.length > 0" class="children">
+  <app-group (changeCurrentGroup)="changeCurrentGroup.emit($event)" *ngFor="let subgroup of group.groups" [currentGroup]="currentGroup" [group]="subgroup" [rank]="rank + 1"></app-group>
+</div>

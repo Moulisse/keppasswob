@@ -1,0 +1,20 @@
+.rounded {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid 2px var(--ion-color-primary);
+  color: var(--ion-color-primary);
+  border-radius: 50%;
+  height: 28px;
+  width: 28px;
+  font-size: 28px;
+  overflow: hidden;
+  cursor: pointer;
+
+  transition: border-color 0.3s ease-out, color 0.3s ease-out;
+
+  &:hover {
+    border-color: var(--ion-color-secondary);
+    color: var(--ion-color-secondary);
+  }
+}
