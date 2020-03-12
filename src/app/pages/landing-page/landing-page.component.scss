@@ -1,0 +1,18 @@
+.db-button {
+  background-color: var(--ion-item-background);
+  border-radius: 16px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 60px;
+  margin: 16px;
+  transition: box-shadow 0.2s ease-out, color 0.2s ease-out;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 1px 20px -2px var(--ion-color-primary);
+    color: var(--ion-color-primary);
+  }
+}

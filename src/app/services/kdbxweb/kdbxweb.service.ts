@@ -19,14 +19,9 @@ export class KdbxwebService {
   db: Kdbx;
 
   constructor(private alertController: AlertController, private router: Router) {
-    const strFile = localStorage.getItem('file');
-    if (strFile) {
-      this.load(this.str2ab(strFile), 'test', 'test').then();
-    }
   }
 
   async load(file: ArrayBuffer, fileName?, password?) {
-    localStorage.setItem('file', this.ab2str(file));
     if (!password) {
       const pwResult = await this.askPassword(fileName);
       if (pwResult.role) {
@@ -63,6 +58,8 @@ export class KdbxwebService {
       ]
     });
     await alert.present();
+    const firstInput: any = document.querySelector('ion-alert input');
+    firstInput.focus();
     return alert.onWillDismiss();
   }
 

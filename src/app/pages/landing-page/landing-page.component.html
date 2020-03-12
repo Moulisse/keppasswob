@@ -1,5 +1,20 @@
 <ion-content [fullscreen]="true">
   <div class="center">
-    <input (change)="loadFile($event.target)" type="file">
+
+    <ng-container *ngIf="loadedDBList">
+
+      <div *ngFor="let db of loadedDBList">
+      </div>
+
+      <div (click)="plusButton($event)" class="db-button">
+        <ion-icon name="add"></ion-icon>
+      </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="!loadedDBList">
+      <ion-spinner color="primary" name="dots"></ion-spinner>
+    </ng-container>
+
   </div>
 </ion-content>

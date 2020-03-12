@@ -6,9 +6,8 @@ export const environment = {
   production: false,
 
   G_API: {
-    API_KEY: 'AIzaSyBGEd4cTZdW62BS9SkklsURsWLoPkytmxg',
-    CLIENT_ID: '421137857216-svebrneutpr7e0j7vek03u3onjs50cju.apps.googleusercontent.com',
-    CLIENT_SECRET: 'akQLBmmdkm527kqCp2spQDGa',
+    API_KEY: 'AIzaSyAXmwkLlJHR8-tbPbyPdF6NvSbH2GvbaWQ',
+    CLIENT_ID: '421137857216-kmhcnei4gf7ou6anffoomfphg66afreo.apps.googleusercontent.com',
   }
 };
 

@@ -21,8 +21,6 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.gapi.init();
-
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
