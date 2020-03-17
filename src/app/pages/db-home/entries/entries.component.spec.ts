@@ -1,19 +1,19 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {PlusButtonComponent} from './plus-button.component';
+import {EntriesComponent} from './entries.component';
 
-describe('PlusButtonComponent', () => {
-  let component: PlusButtonComponent;
-  let fixture: ComponentFixture<PlusButtonComponent>;
+describe('EntriesComponent', () => {
+  let component: EntriesComponent;
+  let fixture: ComponentFixture<EntriesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PlusButtonComponent],
+      declarations: [EntriesComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PlusButtonComponent);
+    fixture = TestBed.createComponent(EntriesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

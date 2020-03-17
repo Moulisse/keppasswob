@@ -6,10 +6,10 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: 'db-home.page.html',
+  styleUrls: ['db-home.page.scss'],
 })
-export class HomePage {
+export class DbHomePage {
 
   db: Kdbx;
 

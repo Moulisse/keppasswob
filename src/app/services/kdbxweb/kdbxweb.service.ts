@@ -1,15 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Kdbx} from './types/Kdbx';
 import {AlertController} from '@ionic/angular';
-import {Router} from '@angular/router';
-
-declare const kdbxweb: {
-  ProtectedValue;
-  Kdbx: {
-    load(ArrayBuffer, credentials);
-  }
-  Credentials(protectedValue): void;
-};
 
 @Injectable({
   providedIn: 'root'
@@ -18,26 +9,25 @@ export class KdbxwebService {
 
   db: Kdbx;
 
-  constructor(private alertController: AlertController, private router: Router) {
+  constructor(private alertController: AlertController) {
   }
 
-  async load(file: ArrayBuffer, fileName?, password?) {
-    if (!password) {
-      const pwResult = await this.askPassword(fileName);
-      if (pwResult.role) {
-        return;
-      }
-      password = pwResult.data.values.pw;
-    }
-    const credentials = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(password));
-    try {
-      this.db = await kdbxweb.Kdbx.load(file, credentials);
-    } catch (e) {
-      return this.load(file);
-    }
-    this.router.navigate(['/home']).then();
-    return this.db;
-  }
+  // async load(file: ArrayBuffer, fileName?, password?) {
+  //   if (!password) {
+  //     const pwResult = await this.askPassword(fileName);
+  //     if (pwResult.role) {
+  //       return;
+  //     }
+  //     password = pwResult.data.values.pw;
+  //   }
+  //   const credentials = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(password));
+  //   try {
+  //     this.db = await kdbxweb.Kdbx.load(file, credentials);
+  //   } catch (e) {
+  //     return this.load(file);
+  //   }
+  //   return this.db;
+  // }
 
   async askPassword(fileName) {
     const alert = await this.alertController.create({

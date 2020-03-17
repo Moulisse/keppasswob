@@ -2,8 +2,7 @@ import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {GapiService} from '../../services/gapi/gapi.service';
 import {takeUntil} from 'rxjs/operators';
-import {PlusButtonComponent} from './plus-button/plus-button.component';
-import {PopoverController} from '@ionic/angular';
+import {Kdbx} from '../../services/kdbxweb/types/Kdbx';
 
 @Component({
   selector: 'app-landing-page',
@@ -14,15 +13,15 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   destroy$: Subject<void> = new Subject<void>();
 
-  loadedDBList: string[];
+  loadedDBList: Kdbx[];
 
-  constructor(private gapi: GapiService, private ngZone: NgZone, private popoverController: PopoverController) {
+  constructor(private gapi: GapiService, private ngZone: NgZone) {
   }
 
   ngOnInit(): void {
     this.gapi.dbList.pipe(
       takeUntil(this.destroy$),
-    ).subscribe((res: string[]) => {
+    ).subscribe((res: Kdbx[]) => {
       this.ngZone.run(() => {
         this.loadedDBList = res;
       });
@@ -33,14 +32,31 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  async plusButton(ev) {
-    const popover = await this.popoverController.create({
-      component: PlusButtonComponent,
-      event: ev,
-      showBackdrop: false,
-      mode: 'ios'
-    });
-    return await popover.present();
+  plusButton(): void {
+
+  }
+
+  refreshButton(): void {
+    this.gapi.init(true);
+  }
+
+  importButton(): void {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = (e: any) => {
+      const file = (e.target as HTMLInputElement).files[0];
+      if (!file) {
+        return;
+      }
+      const fr = new FileReader();
+      fr.onloadend = (() => {
+        return async (readFile) => {
+          await this.gapi.addDb(new Kdbx(file.name.split('.kdbx')[0], readFile.target.result));
+        };
+      })();
+      fr.readAsArrayBuffer(file);
+    };
+    input.click();
   }
 
   // loadFile(target: any) {

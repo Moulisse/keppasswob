@@ -4,7 +4,7 @@ import {IonicModule} from '@ionic/angular';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
-import {HomePage} from './home.page';
+import {DbHomePage} from './db-home.page';
 import {GroupComponent} from './group/group.component';
 import {EntriesComponent} from './entries/entries.component';
 import {AddButtonComponent} from '../../components/add-button/add-button.component';
@@ -17,11 +17,11 @@ import {AddButtonComponent} from '../../components/add-button/add-button.compone
     RouterModule.forChild([
       {
         path: '',
-        component: HomePage
+        component: DbHomePage
       }
     ])
   ],
-  declarations: [HomePage, GroupComponent, EntriesComponent, AddButtonComponent]
+  declarations: [DbHomePage, GroupComponent, EntriesComponent, AddButtonComponent]
 })
 export class HomePageModule {
 }

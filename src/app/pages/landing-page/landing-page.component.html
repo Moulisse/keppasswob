@@ -1,20 +1,28 @@
 <ion-content [fullscreen]="true">
   <div class="center">
 
-    <ng-container *ngIf="loadedDBList">
-
-      <div *ngFor="let db of loadedDBList">
+    <div *ngFor="let db of loadedDBList" class="column">
+      <div class="db-button">
+        <ng-container *ngIf="!db.saving">
+          {{db.name}}
+        </ng-container>
+        <ng-container *ngIf="db.saving">
+          <ion-spinner color="primary" name="dots"></ion-spinner>
+        </ng-container>
       </div>
+    </div>
 
-      <div (click)="plusButton($event)" class="db-button">
+    <div class="triple-buttons column">
+      <div (click)="plusButton()" class="db-button">
         <ion-icon name="add"></ion-icon>
       </div>
-
-    </ng-container>
-
-    <ng-container *ngIf="!loadedDBList">
-      <ion-spinner color="primary" name="dots"></ion-spinner>
-    </ng-container>
+      <div (click)="refreshButton()" class="db-button">
+        <ion-icon name="refresh"></ion-icon>
+      </div>
+      <div (click)="importButton()" class="db-button">
+        <ion-icon name="download"></ion-icon>
+      </div>
+    </div>
 
   </div>
 </ion-content>
