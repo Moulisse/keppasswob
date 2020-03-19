@@ -25,19 +25,6 @@ export class GapiService {
     }
   }
 
-  disconnect() {
-    gapi.auth2.getAuthInstance().signOut();
-  }
-
-  async addDb(db: Kdbx) {
-    db.saving = true;
-    const newList = this.dbList.getValue() || [];
-    newList.push(db);
-    this.dbList.next(newList);
-    await this.loadConfig();
-
-  }
-
   private async loadConfig() {
     return new Promise((resolve, error) => {
       gapi.load('client', async () => {
@@ -67,7 +54,58 @@ export class GapiService {
       this.connected.next(true);
       resolve();
     }
+  }
 
+  async addDb(db: Kdbx) {
+    console.log(db);
+
+    console.log('--> create', db);
+    db.saving = true;
+    let newList = this.dbList.getValue() || [];
+    newList.push(db);
+    this.dbList.next(newList);
+    await this.loadConfig();
+
+    gapi.client.drive.files.create({
+      name: db.name,
+      fields: 'id',
+      parents: ['appDataFolder']
+    }).then((newFile) => {
+
+      gapi.client.request({
+        path: 'https://www.googleapis.com/upload/drive/v2/files/' + newFile.result.id + '?uploadType=media',
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: {
+          db: db.toString()
+        }
+      }).then(res => {
+        console.log('<--- create', newFile, res);
+        db.saving = false;
+        db.id = res.result?.id;
+        this.dbList.next(this.dbList.getValue());
+        if (res.status !== 200) {
+          newList = this.dbList.getValue() || [];
+          this.dbList.next(newList.filter(dbInList => dbInList.id !== db.id));
+        }
+      });
+    });
+  }
+
+  removeDb(db: Kdbx) {
+    console.log('--> delete', db);
+    if (!db.id) {
+      return;
+    }
+    gapi.client.drive.files.delete({
+      fileId: db.id
+    }).then((res) => {
+      console.log('<-- delete', res);
+      if (res.status === 204) {
+        const newList = this.dbList.getValue() || [];
+        this.dbList.next(newList.filter(dbInList => dbInList.id !== db.id));
+      }
+    });
   }
 
   private loadDBs() {
@@ -80,6 +118,16 @@ export class GapiService {
       if (res?.result?.files) {
         console.log('<-- Loaded db', res.result.files);
         this.dbList.next(res.result.files);
+
+        if (res.result.files.length > 0) {
+          gapi.client.drive.files.get({
+            fileId: res.result.files[0].id,
+            alt: 'media'
+          }).then(file => {
+            console.log(file);
+          });
+        }
+
       }
     });
   }

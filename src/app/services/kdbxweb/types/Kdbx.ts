@@ -21,6 +21,8 @@ export class Kdbx {
   data: ArrayBuffer;
   saving = false;
 
+  id: string;
+
   constructor(name: string, data: ArrayBuffer) {
     this.name = name;
     this.data = data;
@@ -36,6 +38,10 @@ export class Kdbx {
     // }
     const credentials = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(password));
     return Object.assign(this, await kdbxweb.Kdbx.load(file, credentials));
+  }
+
+  toString() {
+    return String.fromCharCode.apply(null, new Uint16Array(this.data));
   }
 
 }

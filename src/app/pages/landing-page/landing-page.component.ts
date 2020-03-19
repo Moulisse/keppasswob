@@ -72,4 +72,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   //   fr.readAsArrayBuffer(target.files[0]);
   // }
 
+  clickDB(db: Kdbx) {
+    this.gapi.removeDb(db);
+  }
 }

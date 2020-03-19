@@ -2,7 +2,7 @@
   <div class="center">
 
     <div *ngFor="let db of loadedDBList" class="column">
-      <div class="db-button">
+      <div (click)="clickDB(db)" class="db-button">
         <ng-container *ngIf="!db.saving">
           {{db.name}}
         </ng-container>

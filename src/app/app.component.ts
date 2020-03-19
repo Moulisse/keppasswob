@@ -21,7 +21,7 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.gapi.init().then();
+    this.gapi.init(true).then();
 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
