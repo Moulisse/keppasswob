@@ -3,6 +3,7 @@ import {Subject} from 'rxjs';
 import {GapiService} from '../../services/gapi/gapi.service';
 import {takeUntil} from 'rxjs/operators';
 import {Kdbx} from '../../services/kdbxweb/types/Kdbx';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,7 +16,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   loadedDBList: Kdbx[];
 
-  constructor(private gapi: GapiService, private ngZone: NgZone) {
+  constructor(public gapi: GapiService, private ngZone: NgZone, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -37,7 +38,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   refreshButton(): void {
-    this.gapi.init(true);
+    this.gapi.init(true).then();
   }
 
   importButton(): void {
@@ -73,6 +74,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   // }
 
   clickDB(db: Kdbx) {
-    this.gapi.removeDb(db);
+    if (!db.id) {
+      return;
+    }
+    this.router.navigate(['/db-home', db.id]).then();
   }
 }

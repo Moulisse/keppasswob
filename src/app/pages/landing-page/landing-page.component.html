@@ -17,7 +17,8 @@
         <ion-icon name="add"></ion-icon>
       </div>
       <div (click)="refreshButton()" class="db-button">
-        <ion-icon name="refresh"></ion-icon>
+        <ion-icon *ngIf="gapi.dbLoaded" name="refresh"></ion-icon>
+        <ion-spinner *ngIf="!gapi.dbLoaded" color="primary" name="dots"></ion-spinner>
       </div>
       <div (click)="importButton()" class="db-button">
         <ion-icon name="download"></ion-icon>

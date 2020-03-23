@@ -6,26 +6,19 @@
 
 .triple-buttons {
   display: grid;
-  grid-template-areas: "newDB newDB" "reload import";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   justify-items: center;
   align-items: center;
   grid-gap: 12px;
 
   > div:nth-child(1) {
-    grid-area: newDB;
-  }
-
-  > div:nth-child(2) {
-    grid-area: reload;
-  }
-
-  > div:nth-child(3) {
-    grid-area: import;
+    grid-column: auto/ span 2;
   }
 }
 
 .db-button {
-  background-color: var(--ion-item-background);
+  background-color: #1a1b1e30;
   border-radius: 16px;
   width: 100%;
   height: 100%;
@@ -33,11 +26,13 @@
   justify-content: center;
   align-items: center;
   font-size: 40px;
-  transition: box-shadow 0.2s ease-out, color 0.2s ease-out;
+  transition: box-shadow 0.2s ease-out, color 0.2s ease-out, background-color 0.2s ease-out, transform 0.1s ease-out;
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 1px 20px -5px var(--ion-color-primary);
+    background-color: var(--ion-item-background);
+    transform: scale(1.1);
+    box-shadow: 0 3px 20px -5px rgba(0, 0, 0, 0.7);
     color: var(--ion-color-primary);
   }
 }

@@ -2,17 +2,17 @@
   <div *ngIf="db" class="center">
     <div class="container">
       <div class="header">
-        {{db.meta.name}}
+        <span *ngIf="db.meta">{{db.meta.name}}</span>
         <div (click)="close()" class="close-button">
           <ion-icon name="close"></ion-icon>
         </div>
       </div>
-      <div class="menu">
-        <app-group *ngFor="let group of db.groups" [group]="group" [currentGroup]="currentGroup" (changeCurrentGroup)="currentGroup=$event"></app-group>
-      </div>
-      <div class="content">
-        <app-entries [currentGroup]="currentGroup"></app-entries>
-      </div>
+      <!--      <div class="menu">-->
+      <!--        <app-group *ngFor="let group of db.groups" [group]="group" [currentGroup]="currentGroup" (changeCurrentGroup)="currentGroup=$event"></app-group>-->
+      <!--      </div>-->
+      <!--      <div class="content">-->
+      <!--        <app-entries [currentGroup]="currentGroup"></app-entries>-->
+      <!--      </div>-->
     </div>
   </div>
 </ion-content>

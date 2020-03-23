@@ -10,6 +10,8 @@ declare const gapi;
 })
 export class GapiService {
 
+  dbLoaded = false;
+
   connected: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   dbList: BehaviorSubject<Kdbx[]> = new BehaviorSubject(null);
@@ -108,26 +110,28 @@ export class GapiService {
     });
   }
 
+  loadDBData(db: Kdbx) {
+    console.log('--> Load db data', db.id);
+    gapi.client.drive.files.get({
+      fileId: db.id,
+      alt: 'media'
+    }).then(file => {
+      console.log('<-- Loaded db data', file);
+    });
+  }
+
   private loadDBs() {
     console.log('--> Load db');
+    this.dbLoaded = false;
     gapi.client.drive.files.list({
       spaces: 'appDataFolder',
       fields: 'nextPageToken, files(id, name)',
       pageSize: 100
     }).then(res => {
+      this.dbLoaded = true;
       if (res?.result?.files) {
         console.log('<-- Loaded db', res.result.files);
         this.dbList.next(res.result.files);
-
-        if (res.result.files.length > 0) {
-          gapi.client.drive.files.get({
-            fileId: res.result.files[0].id,
-            alt: 'media'
-          }).then(file => {
-            console.log(file);
-          });
-        }
-
       }
     });
   }

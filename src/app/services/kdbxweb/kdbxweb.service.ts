@@ -1,13 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Kdbx} from './types/Kdbx';
 import {AlertController} from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KdbxwebService {
-
-  db: Kdbx;
 
   constructor(private alertController: AlertController) {
   }
