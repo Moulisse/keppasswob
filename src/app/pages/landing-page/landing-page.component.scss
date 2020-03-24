@@ -26,7 +26,7 @@
   justify-content: center;
   align-items: center;
   font-size: 40px;
-  transition: box-shadow 0.2s ease-out, color 0.2s ease-out, background-color 0.2s ease-out, transform 0.1s ease-out;
+  transition: box-shadow 0.2s ease-out, color 0.2s ease-out, background-color 0.2s ease-out, transform 0.05s ease-out, margin-bottom 0.05s ease-out;
   cursor: pointer;
 
   &:hover {
@@ -34,5 +34,6 @@
     transform: scale(1.1);
     box-shadow: 0 3px 20px -5px rgba(0, 0, 0, 0.7);
     color: var(--ion-color-primary);
+    margin-bottom: 1px;
   }
 }

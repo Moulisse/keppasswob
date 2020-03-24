@@ -1,5 +1,6 @@
 .container {
   background-color: var(--ion-item-background);
+  box-shadow: 0 3px 20px -5px rgba(0, 0, 0, 0.7);
   border-radius: 16px;
   display: grid;
   grid-template-columns: auto 1fr;

@@ -3,9 +3,9 @@ import {animate, style, transition, trigger} from '@angular/animations';
 export const fadeIn = [
   trigger(
     'fadeIn', [
-      transition('* <=> *', [
+      transition(':enter', [
         style({opacity: 0}),
-        animate('.25s ease-in')
+        animate('.25s ease-in'),
       ])
     ]
   ),

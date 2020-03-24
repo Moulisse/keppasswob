@@ -1,34 +1,41 @@
 import {Injectable} from '@angular/core';
-import {AlertController} from '@ionic/angular';
+import {Kdbx} from './types/Kdbx';
+import {AlertController, ToastController} from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KdbxwebService {
 
-  constructor(private alertController: AlertController) {
+  constructor(private alertController: AlertController, private toastController: ToastController) {
   }
 
-  // async load(file: ArrayBuffer, fileName?, password?) {
-  //   if (!password) {
-  //     const pwResult = await this.askPassword(fileName);
-  //     if (pwResult.role) {
-  //       return;
-  //     }
-  //     password = pwResult.data.values.pw;
-  //   }
-  //   const credentials = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(password));
-  //   try {
-  //     this.db = await kdbxweb.Kdbx.load(file, credentials);
-  //   } catch (e) {
-  //     return this.load(file);
-  //   }
-  //   return this.db;
-  // }
+
+  async openDB(db: Kdbx) {
+    if (db.header) {
+      return true;
+    }
+    const password = await this.askPassword(db.name);
+    if (password.role) {
+      return;
+    }
+    try {
+      return await db.open(password.data.values.pw);
+    } catch (e) {
+      const toast = await this.toastController.create({
+        header: 'Mot de passe incorrect',
+        duration: 3000,
+        color: 'danger',
+        mode: 'ios',
+      });
+      await toast.present();
+    }
+    return this.openDB(db);
+  }
 
   async askPassword(fileName) {
     const alert = await this.alertController.create({
-      header: 'Password for ' + fileName,
+      header: 'Mot de passe pour ' + fileName,
       inputs: [{
         name: 'pw',
         type: 'password',
@@ -50,16 +57,4 @@ export class KdbxwebService {
     return alert.onWillDismiss();
   }
 
-  ab2str(buf: ArrayBuffer): string {
-    return String.fromCharCode.apply(null, new Uint16Array(buf));
-  }
-
-  str2ab(str: string): ArrayBuffer {
-    const buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
-    const bufView = new Uint16Array(buf);
-    for (let i = 0, strLen = str.length; i < strLen; i++) {
-      bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
-  }
 }

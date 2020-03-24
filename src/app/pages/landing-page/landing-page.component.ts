@@ -4,6 +4,7 @@ import {GapiService} from '../../services/gapi/gapi.service';
 import {takeUntil} from 'rxjs/operators';
 import {Kdbx} from '../../services/kdbxweb/types/Kdbx';
 import {Router} from '@angular/router';
+import {KdbxwebService} from '../../services/kdbxweb/kdbxweb.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -16,7 +17,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   loadedDBList: Kdbx[];
 
-  constructor(public gapi: GapiService, private ngZone: NgZone, private router: Router) {
+  constructor(public gapi: GapiService, private ngZone: NgZone, private router: Router, private kdbx: KdbxwebService) {
   }
 
   ngOnInit(): void {
@@ -52,7 +53,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       const fr = new FileReader();
       fr.onloadend = (() => {
         return async (readFile) => {
-          await this.gapi.addDb(new Kdbx(file.name.split('.kdbx')[0], readFile.target.result));
+          await this.gapi.addDb(new Kdbx({
+            name: file.name.split('.kdbx')[0],
+            data: readFile.target.result
+          }));
         };
       })();
       fr.readAsArrayBuffer(file);
@@ -77,6 +81,14 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     if (!db.id) {
       return;
     }
-    this.router.navigate(['/db-home', db.id]).then();
+    this.gapi.loadDBData(db).then(() => {
+      this.kdbx.openDB(db).then((res) => {
+        if (res) {
+          this.router.navigate(['/db-home', db.id]).then();
+        }
+      });
+    });
   }
+
+
 }

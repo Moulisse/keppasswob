@@ -1,6 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Group} from '../../../services/kdbxweb/types/Group';
 import {fadeIn} from '../../../animations/fadeIn';
+import {Entry} from '../../../services/kdbxweb/types/Entry';
+import {ClipboardService} from '../../../services/clipboard/clipboard.service';
 
 @Component({
   selector: 'app-entries',
@@ -8,14 +10,15 @@ import {fadeIn} from '../../../animations/fadeIn';
   styleUrls: ['./entries.component.scss'],
   animations: [fadeIn]
 })
-export class EntriesComponent implements OnInit {
+export class EntriesComponent {
 
   @Input() currentGroup: Group;
 
-  constructor() {
+  constructor(private clipboard: ClipboardService) {
   }
 
-  ngOnInit() {
+  clickEntry(entry: Entry) {
+    this.clipboard.write(entry?.fields?.Password?.getText());
   }
 
 }

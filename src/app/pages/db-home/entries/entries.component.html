@@ -1,6 +1,6 @@
-<div [@fadeIn]="currentGroup">
+<div *ngIf="currentGroup" [@fadeIn]="currentGroup">
 
-  <ion-item *ngFor="let entry of currentGroup.entries">
+  <ion-item (click)="clickEntry(entry)" *ngFor="let entry of currentGroup.entries">
     <ion-label>
       {{entry.fields.Title}}
     </ion-label>

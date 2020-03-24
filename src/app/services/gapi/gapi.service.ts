@@ -21,9 +21,9 @@ export class GapiService {
 
 
   async init(force = false) {
-    if (force) {
+    if (force || !this.dbList.getValue()) {
       await this.loadConfig();
-      this.loadDBs();
+      return this.loadDBs();
     }
   }
 
@@ -59,8 +59,6 @@ export class GapiService {
   }
 
   async addDb(db: Kdbx) {
-    console.log(db);
-
     console.log('--> create', db);
     db.saving = true;
     let newList = this.dbList.getValue() || [];
@@ -110,20 +108,32 @@ export class GapiService {
     });
   }
 
-  loadDBData(db: Kdbx) {
-    console.log('--> Load db data', db.id);
-    gapi.client.drive.files.get({
-      fileId: db.id,
-      alt: 'media'
-    }).then(file => {
-      console.log('<-- Loaded db data', file);
-    });
+  async loadDBData(db: Kdbx, force = false) {
+    if (!db.data || force) {
+      console.log('--> Load db data', db.id);
+      return gapi.client.drive.files.get({
+        fileId: db.id,
+        alt: 'media'
+      }).then(file => {
+        db.data = this.str2ab(file.result.db);
+        console.log('<-- Loaded db data', file);
+      });
+    }
   }
 
-  private loadDBs() {
+  str2ab(str: string): ArrayBuffer {
+    const buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+    const bufView = new Uint16Array(buf);
+    for (let i = 0, strLen = str.length; i < strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
+  }
+
+  private async loadDBs() {
     console.log('--> Load db');
     this.dbLoaded = false;
-    gapi.client.drive.files.list({
+    await gapi.client.drive.files.list({
       spaces: 'appDataFolder',
       fields: 'nextPageToken, files(id, name)',
       pageSize: 100
@@ -131,7 +141,14 @@ export class GapiService {
       this.dbLoaded = true;
       if (res?.result?.files) {
         console.log('<-- Loaded db', res.result.files);
-        this.dbList.next(res.result.files);
+        const newDBlistValue = [];
+        res.result.files.forEach(db => {
+          newDBlistValue.push(new Kdbx({
+            name: db.name,
+            id: db.id
+          }));
+        });
+        this.dbList.next(newDBlistValue);
       }
     });
   }

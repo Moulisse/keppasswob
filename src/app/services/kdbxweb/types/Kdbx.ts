@@ -23,21 +23,13 @@ export class Kdbx {
 
   id: string;
 
-  constructor(name: string, data: ArrayBuffer) {
-    this.name = name;
-    this.data = data;
+  constructor(data: any) {
+    Object.assign(this, data);
   }
 
-  async load(file: ArrayBuffer, fileName?, password?) {
-    // if (!password) {
-    //   const pwResult = await this.askPassword(fileName);
-    //   if (pwResult.role) {
-    //     return;
-    //   }
-    //   password = pwResult.data.values.pw;
-    // }
+  async open(password) {
     const credentials = new kdbxweb.Credentials(kdbxweb.ProtectedValue.fromString(password));
-    return Object.assign(this, await kdbxweb.Kdbx.load(file, credentials));
+    return Object.assign(this, await kdbxweb.Kdbx.load(this.data, credentials));
   }
 
   toString() {
@@ -45,3 +37,4 @@ export class Kdbx {
   }
 
 }
+
