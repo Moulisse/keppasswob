@@ -8,10 +8,10 @@ import {ToastController} from '@ionic/angular';
 })
 export class ClipboardService {
 
-  resetCLipboard: Subject<void> = new Subject<void>();
+  resetClipboard: Subject<void> = new Subject<void>();
 
   constructor(private toastController: ToastController) {
-    this.resetCLipboard.pipe(
+    this.resetClipboard.pipe(
       debounceTime(1000),
     ).subscribe(() => {
       console.log('try reset');
@@ -38,7 +38,7 @@ export class ClipboardService {
         mode: 'ios',
       });
       await toast.present();
-      this.resetCLipboard.next();
+      this.resetClipboard.next();
     });
   }
 }

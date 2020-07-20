@@ -24,8 +24,10 @@ export class AppComponent {
     this.gapi.init().then();
 
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      if (this.platform.is('mobile')) {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+      }
     });
   }
 }

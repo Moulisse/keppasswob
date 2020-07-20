@@ -1,0 +1,13 @@
+<div *ngFor="let fav of favList" class="card">
+  <a [href]="fav.url" class="card-button">
+    <ion-icon (click)="showOptions(fav, $event); $event.preventDefault()" class="options" name="ellipsis-vertical"></ion-icon>
+    {{fav.name}}
+    <img *ngIf="fav.favicon" [src]="fav.favicon" alt>
+  </a>
+</div>
+
+<div class="card">
+  <div (click)="newFav()" class="card-button">
+    <ion-icon name="add"></ion-icon>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div *ngFor="let db of loadedDBList" class="card">
+  <div (click)="clickDB(db)" class="card-button">
+    <ng-container *ngIf="!db.saving">
+      {{db.name}}
+    </ng-container>
+    <ng-container *ngIf="db.saving">
+      <ion-spinner color="primary" name="dots"></ion-spinner>
+    </ng-container>
+  </div>
+</div>
+
+<div class="triple-buttons card">
+  <div (click)="plusButton()" class="card-button">
+    <ion-icon name="add"></ion-icon>
+  </div>
+  <div (click)="refreshButton()" class="card-button">
+    <ion-icon *ngIf="gapi.dbLoaded" name="refresh"></ion-icon>
+    <ion-spinner *ngIf="!gapi.dbLoaded" color="primary" name="dots"></ion-spinner>
+  </div>
+  <div (click)="importButton()" class="card-button">
+    <ion-icon name="download"></ion-icon>
+  </div>
+</div>

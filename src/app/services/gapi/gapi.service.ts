@@ -36,7 +36,7 @@ export class GapiService {
           clientId: environment.G_API.CLIENT_ID,
           scope: 'https://www.googleapis.com/auth/drive.appdata'
         });
-        this.connect(resolve, error);
+        this.connect(resolve, error).then();
       });
     });
   }

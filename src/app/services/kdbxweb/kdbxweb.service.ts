@@ -10,7 +10,6 @@ export class KdbxwebService {
   constructor(private alertController: AlertController, private toastController: ToastController) {
   }
 
-
   async openDB(db: Kdbx) {
     if (db.header) {
       return true;
@@ -54,7 +53,7 @@ export class KdbxwebService {
     await alert.present();
     const firstInput: any = document.querySelector('ion-alert input');
     firstInput.focus();
-    return alert.onWillDismiss();
+    return alert.onDidDismiss();
   }
 
 }
